@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import Button from '../ui/Button'
 import classes from './EventsSearch.module.css'
 
-function EventsSearch(props) {
+function EventsSearch({ onSearch }) {
   const yearInputRef = useRef()
   const monthInputRef = useRef()
 
@@ -13,7 +13,7 @@ function EventsSearch(props) {
     const selectedYear = yearInputRef.current.value
     const selectedMonth = monthInputRef.current.value
 
-    props.onSearch(selectedYear, selectedMonth)
+    onSearch(selectedYear, selectedMonth)
   }
 
   return (
@@ -37,7 +37,7 @@ function EventsSearch(props) {
             <option value="6">June</option>
             <option value="7">July</option>
             <option value="8">August</option>
-            <option value="9">Septemer</option>
+            <option value="9">September</option>
             <option value="10">October</option>
             <option value="11">November</option>
             <option value="12">December</option>

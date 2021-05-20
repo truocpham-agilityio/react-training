@@ -4,9 +4,7 @@ import AddressIcon from '../icons/AddressIcon'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 import classes from './EventItem.module.css'
 
-function EventItem(props) {
-  const { title, image, date, location, id } = props
-
+function EventItem({ title, image, date, location, id }) {
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
