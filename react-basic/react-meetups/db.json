@@ -1,0 +1,32 @@
+{
+  "meetups": [
+    {
+      "id": 1,
+      "title": "First meeting",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Lower_Manhattan_skyline_-_June_2017.jpg/1920px-Lower_Manhattan_skyline_-_June_2017.jpg",
+      "description": "This is a test!",
+      "address": "Test Address, 12345 Test City"
+    },
+    {
+      "id": 2,
+      "title": "Second meeting",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Lower_Manhattan_skyline_-_June_2017.jpg/1920px-Lower_Manhattan_skyline_-_June_2017.jpg",
+      "description": "This is a test!",
+      "address": "Test Address, 12345 Test City"
+    },
+    {
+      "id": 3,
+      "title": "Third meeting",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Lower_Manhattan_skyline_-_June_2017.jpg/1920px-Lower_Manhattan_skyline_-_June_2017.jpg",
+      "description": "This is a test!",
+      "address": "Test Address, 12345 Test City"
+    },
+    {
+      "title": "Testing",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Lower_Manhattan_skyline_-_June_2017.jpg/1920px-Lower_Manhattan_skyline_-_June_2017.jpg",
+      "address": "Test Address",
+      "description": "This is a test!",
+      "id": 4
+    }
+  ]
+}
