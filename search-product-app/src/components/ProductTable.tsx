@@ -6,6 +6,8 @@ import { Product } from '../interfaces/Product';
 
 type ProductsProps = {
   products: Product[];
+  filterText: string;
+  inStockOnly: boolean;
 };
 
 /**
@@ -13,10 +15,20 @@ type ProductsProps = {
  */
 class ProductTable extends Component<ProductsProps> {
   render() {
+    const { filterText, inStockOnly } = this.props;
+
     const rows: any[] = [];
     let lastCategory: any = null;
 
     this.props.products.forEach((product) => {
+      if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+        return;
+      }
+
+      if (inStockOnly && !product.stocked) {
+        return;
+      }
+
       if (product.category !== lastCategory) {
         rows.push(
           <ProductCategoryRow
