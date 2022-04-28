@@ -15,10 +15,13 @@ type AppProps = {};
 
 type AppState = {
   todoList: ITask[];
+  todoEditingId: string;
 };
+
 class App extends Component<AppProps, AppState> {
   state = {
     todoList: [],
+    todoEditingId: '',
   };
 
   handleAddTodoTask = (task: ITask): void => {
@@ -27,13 +30,33 @@ class App extends Component<AppProps, AppState> {
     }));
   };
 
+  setTodoEditingId = (id: string = ''): void => {
+    this.setState({ todoEditingId: id });
+  };
+
+  handleEditTodoTask = (task: ITask, index: number = -1) => {
+    if (index >= 0) {
+      const { todoList } = this.state;
+      (todoList as ITask[]).splice(index, 1, task);
+
+      this.setState({ todoList, todoEditingId: '' });
+    }
+  };
+
   render = () => {
+    const { todoList, todoEditingId } = this.state;
+
     return (
       <>
         <section className="todoapp">
           <TodoHeader addTodoTask={this.handleAddTodoTask} />
-          <TodoList todoList={this.state.todoList} />
-          {this.state.todoList.length > 0 && <TodoFooter />}
+          <TodoList
+            todoList={todoList}
+            todoEditingId={todoEditingId}
+            setTodoEditingId={this.setTodoEditingId}
+            onEditTodo={this.handleEditTodoTask}
+          />
+          {todoList.length > 0 && <TodoFooter />}
         </section>
         <Footer />
       </>
