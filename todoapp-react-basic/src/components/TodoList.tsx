@@ -1,11 +1,11 @@
 import { ITask } from '../interfaces/ITask';
 import TodoItem from './TodoItem';
 
-type TProps = {
+type TodoListProps = {
   todoList: ITask[];
 };
 
-const TodoList = ({ todoList }: TProps) => {
+const TodoList = ({ todoList }: TodoListProps) => {
   return (
     <>
       <section className="main">
