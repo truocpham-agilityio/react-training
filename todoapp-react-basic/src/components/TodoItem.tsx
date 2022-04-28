@@ -1,10 +1,10 @@
 import { ITask } from '../interfaces/ITask';
 
-type TProps = {
+type TodoItemProps = {
   task: ITask;
 };
 
-const TodoItem = ({ task }: TProps) => {
+const TodoItem = ({ task }: TodoItemProps) => {
   const { title, isCompleted } = task;
 
   return (
