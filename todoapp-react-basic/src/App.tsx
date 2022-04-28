@@ -1,45 +1,43 @@
-import { useState } from 'react';
-import logo from './assets/images/logo.svg';
+import { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import TodoFooter from './components/TodoFooter';
+import TodoHeader from './components/TodoHeader';
+import TodoList from './components/TodoList';
+
+import 'todomvc-common/base.css';
+import 'todomvc-app-css/index.css';
 import './assets/css/App.css';
+import Footer from './components/Footer';
 
-function App() {
-  const [count, setCount] = useState(0);
+class App extends Component {
+  state = {
+    todoList: [
+      {
+        id: uuidv4(),
+        title: 'Task 1',
+        isCompleted: true,
+      },
+      {
+        id: uuidv4(),
+        title: 'Task 2',
+        isCompleted: false,
+      },
+    ],
+  };
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  );
+  render = () => {
+    return (
+      <>
+        <section className="todoapp">
+          <TodoHeader />
+          <TodoList todoList={this.state.todoList} />
+          <TodoFooter />
+        </section>
+        <Footer />
+      </>
+    );
+  };
 }
 
 export default App;
