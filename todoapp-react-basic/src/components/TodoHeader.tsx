@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ChangeEvent, Component, KeyboardEvent } from 'react';
+import { Component, createRef, KeyboardEvent, RefObject } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -7,28 +7,28 @@ type TodoHeaderProps = {
   addTodoTask: (task: ITask) => void;
 };
 
-type TodoHeaderState = {
-  text: string;
-};
+type TodoHeaderState = {};
 
 class TodoHeader extends Component<TodoHeaderProps, TodoHeaderState> {
-  state = {
-    text: '',
-  };
+  titleInput: RefObject<HTMLInputElement>;
+
+  constructor(props: TodoHeaderProps) {
+    super(props);
+
+    this.titleInput = createRef<HTMLInputElement>();
+  }
 
   handleAddTodoTask = (event: KeyboardEvent<HTMLInputElement>) => {
-    const title: string = this.state.text;
+    if (event.key === 'Enter' && this.titleInput.current) {
+      const title: string = this.titleInput.current.value;
 
-    if (event.key === 'Enter' && title) {
       this.props.addTodoTask({
         id: uuidv4(),
         title,
         isCompleted: false,
       });
 
-      this.setState({
-        text: '',
-      });
+      this.titleInput.current.value = '';
     }
   };
 
@@ -41,12 +41,7 @@ class TodoHeader extends Component<TodoHeaderProps, TodoHeaderState> {
             className="new-todo"
             placeholder="What needs to be done?"
             autoFocus
-            value={this.state.text}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              this.setState({
-                text: e.target.value,
-              });
-            }}
+            ref={this.titleInput}
             onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
               this.handleAddTodoTask(e)
             }
