@@ -1,5 +1,5 @@
-import { ITask } from '../interfaces/ITask';
 import TodoItem from './TodoItem';
+import { ITask } from '../interfaces/ITask';
 
 type TodoListProps = {
   todoList: ITask[];
@@ -18,6 +18,20 @@ const TodoList = ({
   onEditTodo,
   onMarkTodoTaskCompleted,
 }: TodoListProps) => {
+  const renderTodoItem = (task: ITask, index: number): JSX.Element => {
+    return (
+      <TodoItem
+        key={task.id}
+        task={task}
+        index={index}
+        todoEditingId={todoEditingId}
+        setTodoEditingId={setTodoEditingId}
+        onEditTodo={onEditTodo}
+        onMarkTodoTaskCompleted={onMarkTodoTaskCompleted}
+      />
+    );
+  };
+
   return (
     <>
       <section className="main">
@@ -28,21 +42,7 @@ const TodoList = ({
           checked={isCheckAll}
         />
         <label htmlFor="toggle-all">Mark all as complete</label>
-        <ul className="todo-list">
-          {todoList.map((task: ITask, index: number) => {
-            return (
-              <TodoItem
-                key={task.id}
-                task={task}
-                index={index}
-                todoEditingId={todoEditingId}
-                setTodoEditingId={setTodoEditingId}
-                onEditTodo={onEditTodo}
-                onMarkTodoTaskCompleted={onMarkTodoTaskCompleted}
-              />
-            );
-          })}
-        </ul>
+        <ul className="todo-list">{todoList.map(renderTodoItem)}</ul>
       </section>
     </>
   );

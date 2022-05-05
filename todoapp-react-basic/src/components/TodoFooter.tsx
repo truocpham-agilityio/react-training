@@ -1,6 +1,5 @@
-import { IFilterButton } from '../interfaces/IFilterButton';
-import { ITask } from '../interfaces/ITask';
 import FilterButton from './FilterButton';
+import { IFilterButton } from '../interfaces/IFilterButton';
 
 type TodoFooterProps = {
   clearCompleted: () => void;
@@ -32,6 +31,10 @@ const TodoFooter = (props: TodoFooterProps) => {
     },
   ];
 
+  const renderFilterButton = (filterButton: IFilterButton): JSX.Element => {
+    return <FilterButton key={`key${filterButton.text}`} data={filterButton} />;
+  };
+
   return (
     <>
       <footer className="footer">
@@ -41,16 +44,7 @@ const TodoFooter = (props: TodoFooterProps) => {
             numOfTodosLeft === 0 || numOfTodosLeft > 1 ? 's' : ''
           } left`}</span>
         </span>
-        <ul className="filters">
-          {filterButtons.map((filterButton: IFilterButton) => {
-            return (
-              <FilterButton
-                key={`key${filterButton.text}`}
-                data={filterButton}
-              />
-            );
-          })}
-        </ul>
+        <ul className="filters">{filterButtons.map(renderFilterButton)}</ul>
         {numOfTodosLeft < numOfTodos && (
           <button className="clear-completed" onClick={clearCompleted}>
             Clear completed
