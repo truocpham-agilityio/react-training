@@ -8,6 +8,7 @@ type TodoItemProps = {
   index: number;
   setTodoEditingId: (id: string) => void;
   onEditTodo: (task: ITask, index: number) => void;
+  onMarkTodoTaskCompleted: (id: string) => void;
 };
 
 type TodoItemState = {
@@ -20,8 +21,14 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
   };
 
   render = () => {
-    const { task, todoEditingId, index, setTodoEditingId, onEditTodo } =
-      this.props;
+    const {
+      task,
+      todoEditingId,
+      index,
+      setTodoEditingId,
+      onEditTodo,
+      onMarkTodoTaskCompleted,
+    } = this.props;
     const { id, title, isCompleted } = task;
     const isEditing = todoEditingId === id;
 
@@ -33,6 +40,12 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
         },
         index,
       );
+    };
+
+    const handleOnChange = (
+      event: ChangeEvent<HTMLInputElement>,
+    ): void => {
+      onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
     };
 
     return (
@@ -61,11 +74,13 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
           ) : (
             <div className={isCompleted ? 'completed' : 'view'}>
               <input
+                data-id={id}
                 className="toggle"
                 type="checkbox"
                 defaultChecked={isCompleted}
+                onChange={handleOnChange}
               />
-              <label onDoubleClick={() => setTodoEditingId(id)}>{title}</label>
+              <label data-id={id} onDoubleClick={() => setTodoEditingId(id)}>{title}</label>
               <button className="destroy"></button>
             </div>
           )}

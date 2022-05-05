@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
 
 import { ITask } from './interfaces/ITask';
@@ -16,13 +17,35 @@ type AppProps = {};
 type AppState = {
   todoList: ITask[];
   todoEditingId: string;
+  isCheckAll: boolean;
 };
+
+const isNotCheckAll = (todoList: ITask[] = []): boolean =>
+  Boolean(todoList.find((todo: ITask) => !todo.isCompleted));
 
 class App extends Component<AppProps, AppState> {
   state = {
-    todoList: [],
+    todoList: [
+      {
+        id: uuidv4(),
+        title: 'Task 1',
+        isCompleted: true,
+      },
+      {
+        id: uuidv4(),
+        title: 'Task 2',
+        isCompleted: false,
+      },
+    ],
     todoEditingId: '',
+    isCheckAll: false,
   };
+
+  componentDidMount() {
+    this.setState({
+      isCheckAll: !isNotCheckAll(this.state.todoList),
+    });
+  }
 
   handleAddTodoTask = (task: ITask): void => {
     this.setState((prevState) => ({
@@ -43,8 +66,50 @@ class App extends Component<AppProps, AppState> {
     }
   };
 
+  handleMarkTodoTaskCompleted = (id: string = ''): void => {
+    const { todoList } = this.state;
+    const updatedTodoList: ITask[] = todoList.map((task: ITask) =>
+      task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
+    );
+
+    this.setState({
+      todoList: updatedTodoList,
+      isCheckAll: !isNotCheckAll(updatedTodoList),
+    });
+  };
+
+  handleToggleMarkAllCompleted = (): void => {
+    let updatedTodoList: ITask[] = [];
+    const { todoList, isCheckAll } = this.state;
+
+    if (isCheckAll) {
+      updatedTodoList = todoList.map((task: ITask) => {
+        return { ...task, isCompleted: false };
+      });
+    } else {
+      updatedTodoList = todoList.map((task: ITask) => {
+        return { ...task, isCompleted: true };
+      });
+    }
+
+    this.setState({
+      todoList: updatedTodoList,
+      isCheckAll: !isNotCheckAll(updatedTodoList),
+    });
+  };
+
+  filterTodosLeft = (todoList: ITask[] = []): ITask[] => {
+    return todoList.filter((task: ITask) => !task.isCompleted);
+  };
+
+  clearCompleted = (): void => {
+    this.setState((prevState) => ({
+      todoList: this.filterTodosLeft(prevState.todoList),
+    }));
+  };
+
   render = () => {
-    const { todoList, todoEditingId } = this.state;
+    const { todoList, todoEditingId, isCheckAll } = this.state;
 
     return (
       <>
@@ -55,8 +120,16 @@ class App extends Component<AppProps, AppState> {
             todoEditingId={todoEditingId}
             setTodoEditingId={this.setTodoEditingId}
             onEditTodo={this.handleEditTodoTask}
+            onMarkTodoTaskCompleted={this.handleMarkTodoTaskCompleted}
+            isCheckAll={isCheckAll}
           />
-          {todoList.length > 0 && <TodoFooter />}
+          {todoList.length > 0 && (
+            <TodoFooter
+              numOfTodos={todoList.length}
+              numOfTodosLeft={this.filterTodosLeft(todoList).length}
+              clearCompleted={this.clearCompleted}
+            />
+          )}
         </section>
         <Footer />
       </>

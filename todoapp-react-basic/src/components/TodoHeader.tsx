@@ -42,9 +42,7 @@ class TodoHeader extends Component<TodoHeaderProps, TodoHeaderState> {
             placeholder="What needs to be done?"
             autoFocus
             ref={this.titleInput}
-            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-              this.handleAddTodoTask(e)
-            }
+            onKeyDown={this.handleAddTodoTask}
           />
         </header>
       </>

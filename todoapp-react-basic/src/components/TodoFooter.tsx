@@ -1,7 +1,16 @@
 import { IFilterButton } from '../interfaces/IFilterButton';
+import { ITask } from '../interfaces/ITask';
 import FilterButton from './FilterButton';
 
-const TodoFooter = () => {
+type TodoFooterProps = {
+  clearCompleted: () => void;
+  numOfTodosLeft: number;
+  numOfTodos: number;
+};
+
+const TodoFooter = (props: TodoFooterProps) => {
+  const { clearCompleted, numOfTodosLeft, numOfTodos } = props;
+
   const filterButtons: IFilterButton[] = [
     {
       text: 'All',
@@ -27,7 +36,10 @@ const TodoFooter = () => {
     <>
       <footer className="footer">
         <span className="todo-count">
-          <strong>2</strong> items left
+          <strong>{numOfTodosLeft}</strong>
+          <span>{` item${
+            numOfTodosLeft === 0 || numOfTodosLeft > 1 ? 's' : ''
+          } left`}</span>
         </span>
         <ul className="filters">
           {filterButtons.map((filterButton: IFilterButton) => {
@@ -39,7 +51,11 @@ const TodoFooter = () => {
             );
           })}
         </ul>
-        <button className="clear-completed">Clear completed</button>
+        {numOfTodosLeft < numOfTodos && (
+          <button className="clear-completed" onClick={clearCompleted}>
+            Clear completed
+          </button>
+        )}
       </footer>
     </>
   );
