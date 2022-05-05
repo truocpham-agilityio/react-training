@@ -23,22 +23,17 @@ const TodoFooter = () => {
     },
   ];
 
+  const renderFilterButton = (filterButton: IFilterButton): JSX.Element => {
+    return <FilterButton key={`key${filterButton.text}`} data={filterButton} />;
+  };
+
   return (
     <>
       <footer className="footer">
         <span className="todo-count">
           <strong>2</strong> items left
         </span>
-        <ul className="filters">
-          {filterButtons.map((filterButton: IFilterButton) => {
-            return (
-              <FilterButton
-                key={`key${filterButton.text}`}
-                data={filterButton}
-              />
-            );
-          })}
-        </ul>
+        <ul className="filters">{filterButtons.map(renderFilterButton)}</ul>
         <button className="clear-completed">Clear completed</button>
       </footer>
     </>

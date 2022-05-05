@@ -1,4 +1,3 @@
-import React from 'react';
 import { IFilterButton } from '../interfaces/IFilterButton';
 
 type FilterButtonProps = {
