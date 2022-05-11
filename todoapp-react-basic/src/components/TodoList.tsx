@@ -42,7 +42,7 @@ const TodoList = ({
           className="toggle-all"
           type="checkbox"
           checked={isCheckAll}
-          onChange={() => {}}
+          readOnly
         />
         <label htmlFor="toggle-all" onClick={checkAll}>
           Mark all as complete
