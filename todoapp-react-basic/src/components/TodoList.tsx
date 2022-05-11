@@ -40,6 +40,7 @@ const TodoList = ({
           className="toggle-all"
           type="checkbox"
           checked={isCheckAll}
+          readOnly
         />
         <label htmlFor="toggle-all">Mark all as complete</label>
         <ul className="todo-list">{todoList.map(renderTodoItem)}</ul>
