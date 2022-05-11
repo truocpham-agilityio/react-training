@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
 
 import { ITask } from '../interfaces/ITask';
+import { TODO_LIST } from '../constants/todoList';
 
 import TodoFooter from '../components/TodoFooter';
 import TodoHeader from '../components/TodoHeader';
@@ -23,18 +24,7 @@ const isNotCheckAll = (todoList: ITask[] = []): boolean =>
 
 class TodoView extends Component<TodoViewProps, TodoViewState> {
   state = {
-    todoList: [
-      {
-        id: uuidv4(),
-        title: 'Task 1',
-        isCompleted: true,
-      },
-      {
-        id: uuidv4(),
-        title: 'Task 2',
-        isCompleted: false,
-      },
-    ],
+    todoList: TODO_LIST,
     todoEditingId: '',
     isCheckAll: false,
   };
