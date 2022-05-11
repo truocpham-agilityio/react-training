@@ -42,9 +42,7 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
       );
     };
 
-    const handleOnChange = (
-      event: ChangeEvent<HTMLInputElement>,
-    ): void => {
+    const handleOnChange = (event: ChangeEvent<HTMLInputElement>): void => {
       onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
     };
 
@@ -72,15 +70,17 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
               }}
             />
           ) : (
-            <div className={isCompleted ? 'completed' : 'view'}>
+            <div className="view">
               <input
                 data-id={id}
                 className="toggle"
                 type="checkbox"
-                defaultChecked={isCompleted}
+                checked={isCompleted}
                 onChange={handleOnChange}
               />
-              <label data-id={id} onDoubleClick={() => setTodoEditingId(id)}>{title}</label>
+              <label data-id={id} onDoubleClick={() => setTodoEditingId(id)}>
+                {title}
+              </label>
               <button className="destroy"></button>
             </div>
           )}

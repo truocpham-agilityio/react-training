@@ -45,7 +45,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     this.setState({ todoEditingId: id });
   };
 
-  handleEditTodoTask = (task: ITask, index: number = -1) => {
+  handleEditTodoTask = (task: ITask, index: number = -1): void => {
     if (index >= 0) {
       const { todoList } = this.state;
       (todoList as ITask[]).splice(index, 1, task);
@@ -66,24 +66,17 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     });
   };
 
-  handleToggleMarkAllCompleted = (): void => {
-    let updatedTodoList: ITask[] = [];
+  handleCheckAll = (): void => {
     const { todoList, isCheckAll } = this.state;
+    const updatedTodoList: ITask[] = todoList.map((task: ITask) => ({
+      ...task,
+      isCompleted: !isCheckAll,
+    }));
 
-    if (isCheckAll) {
-      updatedTodoList = todoList.map((task: ITask) => {
-        return { ...task, isCompleted: false };
-      });
-    } else {
-      updatedTodoList = todoList.map((task: ITask) => {
-        return { ...task, isCompleted: true };
-      });
-    }
-
-    this.setState({
+    this.setState((prevState) => ({
       todoList: updatedTodoList,
-      isCheckAll: !isNotCheckAll(updatedTodoList),
-    });
+      isCheckAll: !prevState.isCheckAll,
+    }));
   };
 
   filterTodosLeft = (todoList: ITask[] = []): ITask[] => {
@@ -110,6 +103,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
             onEditTodo={this.handleEditTodoTask}
             onMarkTodoTaskCompleted={this.handleMarkTodoTaskCompleted}
             isCheckAll={isCheckAll}
+            checkAll={this.handleCheckAll}
           />
           {todoList.length > 0 && (
             <TodoFooter

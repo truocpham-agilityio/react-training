@@ -8,6 +8,7 @@ type TodoListProps = {
   setTodoEditingId: (id: string) => void;
   onEditTodo: (task: ITask, index: number) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
+  checkAll: () => void;
 };
 
 const TodoList = ({
@@ -17,6 +18,7 @@ const TodoList = ({
   setTodoEditingId,
   onEditTodo,
   onMarkTodoTaskCompleted,
+  checkAll,
 }: TodoListProps) => {
   const renderTodoItem = (task: ITask, index: number): JSX.Element => {
     return (
@@ -42,7 +44,9 @@ const TodoList = ({
           checked={isCheckAll}
           readOnly
         />
-        <label htmlFor="toggle-all">Mark all as complete</label>
+        <label htmlFor="toggle-all" onClick={checkAll}>
+          Mark all as complete
+        </label>
         <ul className="todo-list">{todoList.map(renderTodoItem)}</ul>
       </section>
     </>
