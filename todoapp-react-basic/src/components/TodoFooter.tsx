@@ -40,9 +40,7 @@ const TodoFooter = (props: TodoFooterProps) => {
       <footer className="footer">
         <span className="todo-count">
           <strong>{numOfTodosLeft}</strong>
-          <span>{` item${
-            numOfTodosLeft === 0 || numOfTodosLeft > 1 ? 's' : ''
-          } left`}</span>
+          <span>{` item${numOfTodosLeft === 1 ? '' : 's'} left`}</span>
         </span>
         <ul className="filters">{filterButtons.map(renderFilterButton)}</ul>
         {numOfTodosLeft < numOfTodos && (
