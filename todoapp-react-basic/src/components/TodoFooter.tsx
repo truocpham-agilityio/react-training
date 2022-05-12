@@ -1,33 +1,42 @@
 import FilterButton from './FilterButton';
+import { TODO_STATUS } from '../constants/todoStatus';
 import { IFilterButton } from '../interfaces/IFilterButton';
 
 type TodoFooterProps = {
+  setStatusFilter: (status: TODO_STATUS) => void;
   onClearCompleted: () => void;
+  status: TODO_STATUS;
   numOfTodosLeft: number;
   numOfTodos: number;
 };
 
 const TodoFooter = (props: TodoFooterProps) => {
-  const { onClearCompleted, numOfTodosLeft, numOfTodos } = props;
+  const {
+    setStatusFilter,
+    onClearCompleted,
+    numOfTodosLeft,
+    numOfTodos,
+    status,
+  } = props;
 
   const filterButtons: IFilterButton[] = [
     {
       text: 'All',
-      isActivated: true,
+      isActivated: status === TODO_STATUS.ALL,
       link: '',
-      handleClick: () => {},
+      handleClick: () => setStatusFilter(TODO_STATUS.ALL),
     },
     {
       text: 'Active',
-      isActivated: false,
+      isActivated: status === TODO_STATUS.ACTIVE,
       link: 'active',
-      handleClick: () => {},
+      handleClick: () => setStatusFilter(TODO_STATUS.ACTIVE),
     },
     {
       text: 'Completed',
-      isActivated: false,
+      isActivated: status === TODO_STATUS.COMPLETED,
       link: 'completed',
-      handleClick: () => {},
+      handleClick: () => setStatusFilter(TODO_STATUS.COMPLETED),
     },
   ];
 

@@ -2,6 +2,8 @@ import { Component } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 import { TODO_LIST } from '../constants/todoList';
+import { TODO_STATUS } from '../constants/todoStatus';
+import { filterByStatus, isNotCheckAll } from '../utils/todoHelper';
 
 import TodoFooter from '../components/TodoFooter';
 import TodoHeader from '../components/TodoHeader';
@@ -16,16 +18,15 @@ type TodoViewState = {
   todoList: ITask[];
   todoEditingId: string;
   isCheckAll: boolean;
+  status: TODO_STATUS;
 };
-
-const isNotCheckAll = (todoList: ITask[] = []): boolean =>
-  Boolean(todoList.find((todo: ITask) => !todo.isCompleted));
 
 class TodoView extends Component<TodoViewProps, TodoViewState> {
   state = {
     todoList: TODO_LIST,
     todoEditingId: '',
     isCheckAll: false,
+    status: TODO_STATUS.ALL,
   };
 
   componentDidMount() {
@@ -78,36 +79,37 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     }));
   };
 
-  filterTodosLeft = (todoList: ITask[] = []): ITask[] => {
-    return todoList.filter((task: ITask) => !task.isCompleted);
-  };
-
   handleClearCompleted = (): void => {
-    this.setState((prevState) => ({
-      todoList: this.filterTodosLeft(prevState.todoList),
-    }));
+    const { todoList } = this.state;
+
+    this.setState({
+      todoList: filterByStatus(todoList, TODO_STATUS.ACTIVE),
+    });
   };
 
   handleRemoveTodoTask = (id: string = ''): void => {
     const { todoList } = this.state;
-    const updatedTodoList: ITask[] = todoList.filter(
-      (task: ITask) => task.id !== id,
-    );
 
     this.setState({
-      todoList: updatedTodoList,
+      todoList: filterByStatus(todoList, TODO_STATUS.COMPLETED, id),
+    });
+  };
+
+  setStatusFilter = (status: TODO_STATUS): void => {
+    this.setState({
+      status,
     });
   };
 
   render = () => {
-    const { todoList, todoEditingId, isCheckAll } = this.state;
+    const { todoList, todoEditingId, isCheckAll, status } = this.state;
 
     return (
       <>
         <section className="todoapp">
           <TodoHeader addTodoTask={this.handleAddTodoTask} />
           <TodoList
-            todoList={todoList}
+            todoList={filterByStatus(todoList, status)}
             todoEditingId={todoEditingId}
             setTodoEditingId={this.setTodoEditingId}
             onEditTodo={this.handleEditTodoTask}
@@ -118,8 +120,12 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
           />
           {todoList.length > 0 && (
             <TodoFooter
+              setStatusFilter={this.setStatusFilter}
+              status={status}
               numOfTodos={todoList.length}
-              numOfTodosLeft={this.filterTodosLeft(todoList).length}
+              numOfTodosLeft={
+                filterByStatus(todoList, TODO_STATUS.ACTIVE).length
+              }
               onClearCompleted={this.handleClearCompleted}
             />
           )}
