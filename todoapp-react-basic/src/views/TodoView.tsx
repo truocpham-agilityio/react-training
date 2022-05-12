@@ -91,7 +91,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     const { todoList } = this.state;
 
     this.setState({
-      todoList: filterByStatus(todoList, TODO_STATUS.COMPLETED, id),
+      todoList: filterByStatus(todoList, TODO_STATUS.REMOVE, id),
     });
   };
 
