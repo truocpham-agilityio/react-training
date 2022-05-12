@@ -2,13 +2,13 @@ import FilterButton from './FilterButton';
 import { IFilterButton } from '../interfaces/IFilterButton';
 
 type TodoFooterProps = {
-  clearCompleted: () => void;
+  onClearCompleted: () => void;
   numOfTodosLeft: number;
   numOfTodos: number;
 };
 
 const TodoFooter = (props: TodoFooterProps) => {
-  const { clearCompleted, numOfTodosLeft, numOfTodos } = props;
+  const { onClearCompleted, numOfTodosLeft, numOfTodos } = props;
 
   const filterButtons: IFilterButton[] = [
     {
@@ -46,7 +46,7 @@ const TodoFooter = (props: TodoFooterProps) => {
         </span>
         <ul className="filters">{filterButtons.map(renderFilterButton)}</ul>
         {numOfTodosLeft < numOfTodos && (
-          <button className="clear-completed" onClick={clearCompleted}>
+          <button className="clear-completed" onClick={onClearCompleted}>
             Clear completed
           </button>
         )}

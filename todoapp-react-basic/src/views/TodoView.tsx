@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
 
 import { ITask } from '../interfaces/ITask';
@@ -83,7 +82,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     return todoList.filter((task: ITask) => !task.isCompleted);
   };
 
-  clearCompleted = (): void => {
+  handleClearCompleted = (): void => {
     this.setState((prevState) => ({
       todoList: this.filterTodosLeft(prevState.todoList),
     }));
@@ -121,7 +120,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
             <TodoFooter
               numOfTodos={todoList.length}
               numOfTodosLeft={this.filterTodosLeft(todoList).length}
-              clearCompleted={this.clearCompleted}
+              onClearCompleted={this.handleClearCompleted}
             />
           )}
         </section>
