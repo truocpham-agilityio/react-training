@@ -44,11 +44,32 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
       );
     };
 
-    const handleOnChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const handleTextInputChange = (
+      event: ChangeEvent<HTMLInputElement>,
+    ): void => {
+      this.setState({ text: event.target.value });
+    };
+
+    const handleTextInputKeyPress = (
+      event: KeyboardEvent<HTMLInputElement>,
+    ): void => {
+      if (event.key === 'Enter') {
+        handleEditTodoTask();
+      }
+    };
+
+    const handleCheckboxChange = (
+      event: ChangeEvent<HTMLInputElement>,
+    ): void => {
       onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
     };
 
-    const handleOnClickRemoveTask = (
+    const handleDoubleClick = (event: MouseEvent<HTMLLabelElement>): void => {
+      const target = event.target as HTMLElement;
+      setTodoEditingId(target.getAttribute('data-id')!);
+    };
+
+    const handleButtonRemoveClick = (
       event: MouseEvent<HTMLButtonElement>,
     ): void => {
       const target = event.target as HTMLElement;
@@ -68,15 +89,9 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
               type="text"
               autoFocus
               value={this.state.text}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                this.setState({ text: e.target.value })
-              }
+              onChange={handleTextInputChange}
               onBlur={handleEditTodoTask}
-              onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === 'Enter') {
-                  handleEditTodoTask();
-                }
-              }}
+              onKeyPress={handleTextInputKeyPress}
             />
           ) : (
             <div className="view">
@@ -85,15 +100,15 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
                 className="toggle"
                 type="checkbox"
                 checked={isCompleted}
-                onChange={handleOnChange}
+                onChange={handleCheckboxChange}
               />
-              <label data-id={id} onDoubleClick={() => setTodoEditingId(id)}>
+              <label data-id={id} onDoubleClick={handleDoubleClick}>
                 {title}
               </label>
               <button
                 className="destroy"
                 data-id={id}
-                onClick={handleOnClickRemoveTask}
+                onClick={handleButtonRemoveClick}
               />
             </div>
           )}
