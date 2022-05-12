@@ -9,6 +9,7 @@ type TodoListProps = {
   onEditTodo: (task: ITask, index: number) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
   checkAll: () => void;
+  onRemoveTodo: (id: string) => void;
 };
 
 const TodoList = ({
@@ -19,6 +20,7 @@ const TodoList = ({
   onEditTodo,
   onMarkTodoTaskCompleted,
   checkAll,
+  onRemoveTodo,
 }: TodoListProps) => {
   const renderTodoItem = (task: ITask, index: number): JSX.Element => {
     return (
@@ -30,6 +32,7 @@ const TodoList = ({
         setTodoEditingId={setTodoEditingId}
         onEditTodo={onEditTodo}
         onMarkTodoTaskCompleted={onMarkTodoTaskCompleted}
+        onRemoveTodo={onRemoveTodo}
       />
     );
   };

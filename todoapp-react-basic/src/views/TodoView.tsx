@@ -89,6 +89,17 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     }));
   };
 
+  handleRemoveTodoTask = (id: string = ''): void => {
+    const { todoList } = this.state;
+    const updatedTodoList: ITask[] = todoList.filter(
+      (task: ITask) => task.id !== id,
+    );
+
+    this.setState({
+      todoList: updatedTodoList,
+    });
+  };
+
   render = () => {
     const { todoList, todoEditingId, isCheckAll } = this.state;
 
@@ -104,6 +115,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
             onMarkTodoTaskCompleted={this.handleMarkTodoTaskCompleted}
             isCheckAll={isCheckAll}
             checkAll={this.handleCheckAll}
+            onRemoveTodo={this.handleRemoveTodoTask}
           />
           {todoList.length > 0 && (
             <TodoFooter

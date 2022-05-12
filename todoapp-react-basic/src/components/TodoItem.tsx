@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, KeyboardEvent } from 'react';
+import { ChangeEvent, Component, KeyboardEvent, MouseEvent } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -9,6 +9,7 @@ type TodoItemProps = {
   setTodoEditingId: (id: string) => void;
   onEditTodo: (task: ITask, index: number) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
+  onRemoveTodo: (id: string) => void;
 };
 
 type TodoItemState = {
@@ -28,6 +29,7 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
       setTodoEditingId,
       onEditTodo,
       onMarkTodoTaskCompleted,
+      onRemoveTodo,
     } = this.props;
     const { id, title, isCompleted } = task;
     const isEditing = todoEditingId === id;
@@ -44,6 +46,13 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>): void => {
       onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
+    };
+
+    const handleOnClickRemoveTask = (
+      event: MouseEvent<HTMLButtonElement>,
+    ): void => {
+      const target = event.target as HTMLElement;
+      onRemoveTodo(target.getAttribute('data-id')!);
     };
 
     return (
@@ -81,7 +90,11 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
               <label data-id={id} onDoubleClick={() => setTodoEditingId(id)}>
                 {title}
               </label>
-              <button className="destroy"></button>
+              <button
+                className="destroy"
+                data-id={id}
+                onClick={handleOnClickRemoveTask}
+              />
             </div>
           )}
         </li>
