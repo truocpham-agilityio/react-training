@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 import { TODO_LIST } from '../constants/todoList';
@@ -12,7 +12,7 @@ import TodoList from '../components/TodoList';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 
-const TodoApp: FC = () => {
+const TodoApp: FC = memo(() => {
   const [todoList, setTodoList] = useState<ITask[]>(TODO_LIST);
   const [status, setStatus] = useState<TODO_STATUS>(TODO_STATUS.ALL);
   const [todoEditingId, setTodoEditingId] = useState<string>('');
@@ -92,6 +92,6 @@ const TodoApp: FC = () => {
       </section>
     </>
   );
-};
+});
 
 export default TodoApp;

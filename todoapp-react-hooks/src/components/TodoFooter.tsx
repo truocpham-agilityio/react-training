@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import FilterButton from './FilterButton';
 import { TODO_STATUS } from '../constants/todoStatus';
@@ -12,7 +12,7 @@ type TodoFooterProps = {
   numOfTodos: number;
 };
 
-const TodoFooter: FC<TodoFooterProps> = (props: TodoFooterProps) => {
+const TodoFooter: FC<TodoFooterProps> = memo((props: TodoFooterProps) => {
   const {
     setStatusFilter,
     onClearCompleted,
@@ -62,6 +62,6 @@ const TodoFooter: FC<TodoFooterProps> = (props: TodoFooterProps) => {
       </footer>
     </>
   );
-};
+});
 
 export default TodoFooter;

@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  memo,
+  MouseEvent,
+  useState,
+} from 'react';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -12,7 +19,7 @@ type TodoItemProps = {
   onRemoveTodo: (id: string) => void;
 };
 
-const TodoItem: FC<TodoItemProps> = (props: TodoItemProps) => {
+const TodoItem: FC<TodoItemProps> = memo((props: TodoItemProps) => {
   const {
     task,
     todoEditingId,
@@ -106,6 +113,6 @@ const TodoItem: FC<TodoItemProps> = (props: TodoItemProps) => {
       </li>
     </>
   );
-};
+});
 
 export default TodoItem;
