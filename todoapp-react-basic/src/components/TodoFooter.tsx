@@ -17,7 +17,7 @@ class TodoFooter extends Component<TodoFooterProps> {
     super(props);
   }
 
-  render() {
+  render = (): JSX.Element => {
     const {
       setStatusFilter,
       onClearCompleted,

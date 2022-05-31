@@ -101,7 +101,7 @@ class TodoApp extends Component<TodoViewProps, TodoViewState> {
     });
   };
 
-  render = () => {
+  render = (): JSX.Element => {
     const { todoList, todoEditingId, isCheckAll, status } = this.state;
 
     return (

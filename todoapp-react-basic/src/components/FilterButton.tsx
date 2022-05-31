@@ -11,7 +11,7 @@ class FilterButton extends Component<FilterButtonProps> {
     super(props);
   }
 
-  render() {
+  render = (): JSX.Element => {
     const { text, link, isActivated, handleClick } = this.props.data;
 
     return (

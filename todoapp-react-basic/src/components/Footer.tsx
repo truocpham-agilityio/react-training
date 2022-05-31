@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 class Footer extends Component {
-  render() {
+  render = (): JSX.Element => {
     return (
       <>
         <footer className="info">

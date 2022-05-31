@@ -21,7 +21,7 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
     text: this.props.task.title,
   };
 
-  render = () => {
+  render = (): JSX.Element => {
     const {
       task,
       todoEditingId,

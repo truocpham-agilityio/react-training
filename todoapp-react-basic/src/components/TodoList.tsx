@@ -19,7 +19,7 @@ class TodoList extends Component<TodoListProps> {
     super(props);
   }
 
-  render() {
+  render = (): JSX.Element => {
     const {
       todoList,
       todoEditingId,
@@ -63,7 +63,7 @@ class TodoList extends Component<TodoListProps> {
         </section>
       </>
     );
-  }
+  };
 }
 
 export default TodoList;
