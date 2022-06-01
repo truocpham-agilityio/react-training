@@ -27,17 +27,16 @@ const TodoApp: FC = () => {
     setTodoEditingId(id);
   }, []);
 
-  const handleEditTodoTask = useCallback(
-    (task: ITask, index: number = -1): void => {
-      if (index >= 0) {
-        (todoList as ITask[]).splice(index, 1, task);
-        setTodoList([...todoList]);
-
-        setTodoEditingId('');
-      }
-    },
-    [],
-  );
+  const handleEditTodoTask = useCallback((task: ITask): void => {
+    if (task) {
+      setTodoList((prevTodoList: ITask[]) =>
+        prevTodoList.map((prevTask: ITask) =>
+          prevTask.id === task.id ? task : prevTask,
+        ),
+      );
+      setTodoEditingId('');
+    }
+  }, []);
 
   const handleMarkTodoTaskCompleted = useCallback((id: string = ''): void => {
     setTodoList((prevTodoList: ITask[]) =>

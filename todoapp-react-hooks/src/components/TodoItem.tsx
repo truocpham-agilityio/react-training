@@ -12,9 +12,8 @@ import { ITask } from '../interfaces/ITask';
 type TodoItemProps = {
   task: ITask;
   todoEditingId: string;
-  index: number;
   setTodoEditingId: (id: string) => void;
-  onEditTodo: (task: ITask, index: number) => void;
+  onEditTodo: (task: ITask) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
   onRemoveTodo: (id: string) => void;
 };
@@ -23,7 +22,6 @@ const TodoItem: FC<TodoItemProps> = memo((props: TodoItemProps) => {
   const {
     task,
     todoEditingId,
-    index,
     setTodoEditingId,
     onEditTodo,
     onMarkTodoTaskCompleted,
@@ -41,13 +39,10 @@ const TodoItem: FC<TodoItemProps> = memo((props: TodoItemProps) => {
   };
 
   const handleEditTodoTask = (): void => {
-    onEditTodo(
-      {
-        ...task,
-        title: text,
-      },
-      index,
-    );
+    onEditTodo({
+      ...task,
+      title: text,
+    });
   };
 
   const handleTextInputKeyPress = (

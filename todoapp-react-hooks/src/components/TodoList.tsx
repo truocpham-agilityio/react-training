@@ -8,7 +8,7 @@ type TodoListProps = {
   todoEditingId: string;
   isCheckAll: boolean;
   setTodoEditingId: (id: string) => void;
-  onEditTodo: (task: ITask, index: number) => void;
+  onEditTodo: (task: ITask) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
   checkAll: () => void;
   onRemoveTodo: (id: string) => void;
@@ -24,12 +24,11 @@ const TodoList: FC<TodoListProps> = ({
   checkAll,
   onRemoveTodo,
 }: TodoListProps) => {
-  const renderTodoItem = (task: ITask, index: number): JSX.Element => {
+  const renderTodoItem = (task: ITask): JSX.Element => {
     return (
       <TodoItem
         key={task.id}
         task={task}
-        index={index}
         todoEditingId={todoEditingId}
         setTodoEditingId={setTodoEditingId}
         onEditTodo={onEditTodo}
