@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 import { TODO_LIST } from '../constants/todoList';
@@ -12,7 +12,7 @@ import TodoList from '../components/TodoList';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 
-const TodoApp: FC = memo(() => {
+const TodoApp: FC = () => {
   const [todoList, setTodoList] = useState<ITask[]>(TODO_LIST);
   const [status, setStatus] = useState<TODO_STATUS>(TODO_STATUS.ALL);
   const [todoEditingId, setTodoEditingId] = useState<string>('');
@@ -22,27 +22,34 @@ const TodoApp: FC = memo(() => {
     setTodoList([...todoList, newTask]);
   };
 
-  const handleSetTodoEditingId = (id: string = ''): void => {
+  const handleSetTodoEditingId = useCallback((id: string = ''): void => {
     setTodoEditingId(id);
-  };
+  }, []);
 
-  const handleEditTodoTask = (task: ITask, index: number = -1): void => {
-    if (index >= 0) {
-      (todoList as ITask[]).splice(index, 1, task);
+  const handleEditTodoTask = useCallback(
+    (task: ITask, index: number = -1): void => {
+      if (index >= 0) {
+        (todoList as ITask[]).splice(index, 1, task);
+        setTodoList([...todoList]);
 
-      setTodoList([...todoList]);
-      setTodoEditingId('');
-    }
-  };
+        setTodoEditingId('');
+      }
+    },
+    [],
+  );
 
-  const handleMarkTodoTaskCompleted = (id: string = ''): void => {
+  const handleMarkTodoTaskCompleted = useCallback((id: string = ''): void => {
+    setTodoList((prevTodoList: ITask[]) =>
+      prevTodoList.map((task: ITask) =>
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
+      ),
+    );
+
     const updatedTodoList: ITask[] = todoList.map((task: ITask) =>
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
     );
-
-    setTodoList(updatedTodoList);
     setIsCheckAll(!isNotCheckAll(updatedTodoList));
-  };
+  }, []);
 
   const handleCheckAll = (): void => {
     const updatedTodoList: ITask[] = todoList.map((task: ITask) => ({
@@ -54,9 +61,11 @@ const TodoApp: FC = memo(() => {
     setIsCheckAll(!isCheckAll);
   };
 
-  const handleRemoveTodoTask = (id: string = ''): void => {
-    setTodoList(filterByStatus(todoList, TODO_STATUS.REMOVE, id));
-  };
+  const handleRemoveTodoTask = useCallback((id: string = ''): void => {
+    setTodoList((prevTodoList: ITask[]) =>
+      filterByStatus(prevTodoList, TODO_STATUS.REMOVE, id),
+    );
+  }, []);
 
   const handleSetStatusFilter = (status: TODO_STATUS): void => {
     setStatus(status);
@@ -92,6 +101,6 @@ const TodoApp: FC = memo(() => {
       </section>
     </>
   );
-});
+};
 
 export default TodoApp;
