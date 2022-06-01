@@ -21,7 +21,7 @@ type TodoViewState = {
   status: TODO_STATUS;
 };
 
-class TodoView extends Component<TodoViewProps, TodoViewState> {
+class TodoApp extends Component<TodoViewProps, TodoViewState> {
   state = {
     todoList: TODO_LIST,
     todoEditingId: '',
@@ -101,7 +101,7 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
     });
   };
 
-  render = () => {
+  render = (): JSX.Element => {
     const { todoList, todoEditingId, isCheckAll, status } = this.state;
 
     return (
@@ -135,4 +135,4 @@ class TodoView extends Component<TodoViewProps, TodoViewState> {
   };
 }
 
-export default TodoView;
+export default TodoApp;
