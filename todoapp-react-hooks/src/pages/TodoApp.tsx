@@ -16,7 +16,8 @@ const TodoApp: FC = () => {
   const [todoList, setTodoList] = useState<ITask[]>(TODO_LIST);
   const [status, setStatus] = useState<TODO_STATUS>(TODO_STATUS.ALL);
   const [todoEditingId, setTodoEditingId] = useState<string>('');
-  const [isCheckAll, setIsCheckAll] = useState<boolean>(false);
+
+  const isCheckAll: boolean = !isNotCheckAll(todoList);
 
   const handleAddTodoTask = (newTask: ITask): void => {
     setTodoList([...todoList, newTask]);
@@ -44,11 +45,6 @@ const TodoApp: FC = () => {
         task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
       ),
     );
-
-    const updatedTodoList: ITask[] = todoList.map((task: ITask) =>
-      task.id === id ? { ...task, isCompleted: !task.isCompleted } : task,
-    );
-    setIsCheckAll(!isNotCheckAll(updatedTodoList));
   }, []);
 
   const handleCheckAll = (): void => {
@@ -58,7 +54,6 @@ const TodoApp: FC = () => {
     }));
 
     setTodoList(updatedTodoList);
-    setIsCheckAll(!isCheckAll);
   };
 
   const handleRemoveTodoTask = useCallback((id: string = ''): void => {
