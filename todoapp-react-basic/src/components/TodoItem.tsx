@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, KeyboardEvent, MouseEvent } from 'react';
+import { ChangeEvent, Component, KeyboardEvent } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -53,22 +53,16 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
       }
     };
 
-    const handleCheckboxChange = (
-      event: ChangeEvent<HTMLInputElement>,
-    ): void => {
-      onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
+    const handleCheckboxChange = (): void => {
+      onMarkTodoTaskCompleted(id);
     };
 
-    const handleDoubleClick = (event: MouseEvent<HTMLLabelElement>): void => {
-      const target = event.target as HTMLElement;
-      setTodoEditingId(target.getAttribute('data-id')!);
+    const handleDoubleClick = (): void => {
+      setTodoEditingId(id);
     };
 
-    const handleButtonRemoveClick = (
-      event: MouseEvent<HTMLButtonElement>,
-    ): void => {
-      const target = event.target as HTMLElement;
-      onRemoveTodo(target.getAttribute('data-id')!);
+    const handleButtonRemoveClick = (): void => {
+      onRemoveTodo(id);
     };
 
     return (
@@ -91,20 +85,13 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
           ) : (
             <div className="view">
               <input
-                data-id={id}
                 className="toggle"
                 type="checkbox"
                 checked={isCompleted}
                 onChange={handleCheckboxChange}
               />
-              <label data-id={id} onDoubleClick={handleDoubleClick}>
-                {title}
-              </label>
-              <button
-                className="destroy"
-                data-id={id}
-                onClick={handleButtonRemoveClick}
-              />
+              <label onDoubleClick={handleDoubleClick}>{title}</label>
+              <button className="destroy" onClick={handleButtonRemoveClick} />
             </div>
           )}
         </li>
