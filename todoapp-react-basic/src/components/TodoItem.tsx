@@ -5,9 +5,8 @@ import { ITask } from '../interfaces/ITask';
 type TodoItemProps = {
   task: ITask;
   todoEditingId: string;
-  index: number;
   setTodoEditingId: (id: string) => void;
-  onEditTodo: (task: ITask, index: number) => void;
+  onEditTodo: (task: ITask) => void;
   onMarkTodoTaskCompleted: (id: string) => void;
   onRemoveTodo: (id: string) => void;
 };
@@ -25,7 +24,6 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
     const {
       task,
       todoEditingId,
-      index,
       setTodoEditingId,
       onEditTodo,
       onMarkTodoTaskCompleted,
@@ -35,13 +33,10 @@ class TodoItem extends Component<TodoItemProps, TodoItemState> {
     const isEditing = todoEditingId === id;
 
     const handleEditTodoTask = (): void => {
-      onEditTodo(
-        {
-          ...task,
-          title: this.state.text,
-        },
-        index,
-      );
+      onEditTodo({
+        ...task,
+        title: this.state.text,
+      });
     };
 
     const handleTextInputChange = (

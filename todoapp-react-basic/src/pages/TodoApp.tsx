@@ -37,12 +37,17 @@ class TodoApp extends Component<TodoViewProps, TodoViewState> {
     this.setState({ todoEditingId: id });
   };
 
-  handleEditTodoTask = (task: ITask, index: number = -1): void => {
-    if (index >= 0) {
+  handleEditTodoTask = (task: ITask): void => {
+    if (task && task.id) {
       const { todoList } = this.state;
-      (todoList as ITask[]).splice(index, 1, task);
+      const updatedTodoList = todoList.map((todo: ITask) => {
+        if (todo.id === task.id) {
+          return task;
+        }
+        return todo;
+      });
 
-      this.setState({ todoList, todoEditingId: '' });
+      this.setState({ todoList: updatedTodoList, todoEditingId: '' });
     }
   };
 
