@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  FC,
-  KeyboardEvent,
-  memo,
-  MouseEvent,
-  useState,
-} from 'react';
+import { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
 
 import { ITask } from '../interfaces/ITask';
 
@@ -53,20 +46,16 @@ const TodoItem: FC<TodoItemProps> = memo((props: TodoItemProps) => {
     }
   };
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    onMarkTodoTaskCompleted(event.target.getAttribute('data-id')!);
+  const handleCheckboxChange = (): void => {
+    onMarkTodoTaskCompleted(id);
   };
 
-  const handleDoubleClick = (event: MouseEvent<HTMLLabelElement>): void => {
-    const target = event.target as HTMLElement;
-    setTodoEditingId(target.getAttribute('data-id')!);
+  const handleDoubleClick = (): void => {
+    setTodoEditingId(id);
   };
 
-  const handleButtonRemoveClick = (
-    event: MouseEvent<HTMLButtonElement>,
-  ): void => {
-    const target = event.target as HTMLElement;
-    onRemoveTodo(target.getAttribute('data-id')!);
+  const handleButtonRemoveClick = (): void => {
+    onRemoveTodo(id);
   };
 
   return (
@@ -89,20 +78,13 @@ const TodoItem: FC<TodoItemProps> = memo((props: TodoItemProps) => {
         ) : (
           <div className="view">
             <input
-              data-id={id}
               className="toggle"
               type="checkbox"
               checked={isCompleted}
               onChange={handleCheckboxChange}
             />
-            <label data-id={id} onDoubleClick={handleDoubleClick}>
-              {title}
-            </label>
-            <button
-              className="destroy"
-              data-id={id}
-              onClick={handleButtonRemoveClick}
-            />
+            <label onDoubleClick={handleDoubleClick}>{title}</label>
+            <button className="destroy" onClick={handleButtonRemoveClick} />
           </div>
         )}
       </li>
