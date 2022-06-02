@@ -1,3 +1,11 @@
-:focus {
+:focus,
+.toggle:focus + label,
+.toggle-all:focus + label {
   box-shadow: none;
+}
+
+.destroy,
+.toggle:hover,
+.toggle-all:hover + label {
+  cursor: pointer;
 }
