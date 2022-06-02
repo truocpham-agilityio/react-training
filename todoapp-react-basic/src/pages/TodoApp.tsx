@@ -17,7 +17,6 @@ type TodoViewProps = {};
 type TodoViewState = {
   todoList: ITask[];
   todoEditingId: string;
-  isCheckAll: boolean;
   status: TODO_STATUS;
 };
 
@@ -25,15 +24,8 @@ class TodoApp extends Component<TodoViewProps, TodoViewState> {
   state = {
     todoList: TODO_LIST,
     todoEditingId: '',
-    isCheckAll: false,
     status: TODO_STATUS.ALL,
   };
-
-  componentDidMount() {
-    this.setState({
-      isCheckAll: !isNotCheckAll(this.state.todoList),
-    });
-  }
 
   handleAddTodoTask = (task: ITask): void => {
     this.setState((prevState) => ({
@@ -62,21 +54,18 @@ class TodoApp extends Component<TodoViewProps, TodoViewState> {
 
     this.setState({
       todoList: updatedTodoList,
-      isCheckAll: !isNotCheckAll(updatedTodoList),
     });
   };
 
   handleCheckAll = (): void => {
-    const { todoList, isCheckAll } = this.state;
+    const { todoList } = this.state;
+    const isCheckAll: boolean = !isNotCheckAll(todoList);
     const updatedTodoList: ITask[] = todoList.map((task: ITask) => ({
       ...task,
       isCompleted: !isCheckAll,
     }));
 
-    this.setState((prevState) => ({
-      todoList: updatedTodoList,
-      isCheckAll: !prevState.isCheckAll,
-    }));
+    this.setState({ todoList: updatedTodoList });
   };
 
   handleClearCompleted = (): void => {
@@ -102,7 +91,8 @@ class TodoApp extends Component<TodoViewProps, TodoViewState> {
   };
 
   render = (): JSX.Element => {
-    const { todoList, todoEditingId, isCheckAll, status } = this.state;
+    const { todoList, todoEditingId, status } = this.state;
+    const isCheckAll: boolean = !isNotCheckAll(todoList);
 
     return (
       <>
